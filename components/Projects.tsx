@@ -9,7 +9,7 @@ const Projects: React.FC = () => {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Featured Projects</h2>
           <div className="w-20 h-1 bg-accent mx-auto rounded-full"></div>
-          <p className="mt-4 text-gray-400">A collection of projects demonstrating my technical capabilities</p>
+          <p className="mt-4 text-gray-400">A collection of sample projects demonstrating my technical capabilities</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -18,12 +18,16 @@ const Projects: React.FC = () => {
               <div className="h-48 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center relative overflow-hidden">
                 <Layers size={48} className="text-gray-600 group-hover:text-accent transition-colors duration-300" />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                  <button className="p-2 bg-white rounded-full text-primary hover:bg-accent transition-colors">
-                    <Github size={20} />
-                  </button>
-                  <button className="p-2 bg-white rounded-full text-primary hover:bg-accent transition-colors">
-                    <ExternalLink size={20} />
-                  </button>
+                  {project.githubUrl && (
+                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="p-2 bg-white rounded-full text-primary hover:bg-accent transition-colors">
+                      <Github size={20} />
+                    </a>
+                  )}
+                  {project.liveUrl && (
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="p-2 bg-white rounded-full text-primary hover:bg-accent transition-colors">
+                      <ExternalLink size={20} />
+                    </a>
+                  )}
                 </div>
               </div>
               

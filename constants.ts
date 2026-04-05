@@ -58,18 +58,24 @@ export const PROJECTS_DATA: Project[] = [
       "Created an NFT marketplace using ReactJS and NodeJS.",
       "Wrote Solidity smart contracts to handle transactions.",
       "Tested 10 cases to ensure proper functionality."
-    ]
+    ],
+    githubUrl: "https://github.com/AnuragPatial/NftMarketplace",
+    liveUrl: ""
   },
   {
-    id: "todo-app",
-    name: "To Do App",
-    techStack: ["ReactJS", "LocalStorage"],
+    id: "kiosk-food-app",
+    name: "Kiosk Food Ordering System",
+    techStack: ["ReactJS", "NodeJS", "System Design"],
     description: [
-      "Built a to-do list app with React.js for task management.",
-      "Managed tasks using React hooks across different statuses.",
-      "Designed a responsive interface for smooth user experience.",
-      "Enabled task persistence with local storage integration."
-    ]
+      "Designed and developed a self-service kiosk food ordering interface for a client.",
+      "Created an intuitive frontend flow enabling users to browse menu, customize items, and place orders.",
+      "Architected the complete backend order processing flow, including order creation, status tracking, and management.",
+      "Integrated payment gateway flow to handle secure and seamless transactions.",
+      "Defined the end-to-end business logic from order placement to payment confirmation and processing.",
+      "Focused on user experience, ensuring fast navigation and minimal friction in high-traffic kiosk environments."
+    ],
+    githubUrl: "https://github.com/AnuragPatial/burgertech-kiosk",
+    liveUrl: "https://burgertech-kiosk.vercel.app"
   },
   {
     id: "restaurant-web",
@@ -80,7 +86,9 @@ export const PROJECTS_DATA: Project[] = [
       "Implemented interactive features with JavaScript for enhanced user engagement.",
       "Built dynamic components and pages using ReactJS.",
       "Ensured cross-browser compatibility and responsiveness."
-    ]
+    ],
+    githubUrl: "https://github.com/AnuragPatial/Restaurant-s-Website",
+    liveUrl: "restaurant-s-website.vercel.app"
   }
 ];
 

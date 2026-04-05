@@ -33,8 +33,9 @@ const Hero: React.FC = () => {
             >
               View Projects <ArrowRight size={18} />
             </a>
-            <a 
-              href="#" // Mock resume download
+            <a
+              href="/Anurag_Patial_Resume.pdf"
+              download="Anurag_Patial_Resume.pdf"
               className="px-6 py-3 rounded-lg border border-gray-600 hover:border-white hover:text-white text-gray-300 transition-colors flex items-center gap-2"
             >
               Download Resume <Download size={18} />
