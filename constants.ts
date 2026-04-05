@@ -88,7 +88,7 @@ export const PROJECTS_DATA: Project[] = [
       "Ensured cross-browser compatibility and responsiveness."
     ],
     githubUrl: "https://github.com/AnuragPatial/Restaurant-s-Website",
-    liveUrl: "restaurant-s-website.vercel.app"
+    liveUrl: "https://restaurant-s-website.vercel.app"
   }
 ];
 
