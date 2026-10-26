@@ -28,3 +28,20 @@ The form prepares a prefilled email draft by default; the visitor must send it i
 The existing repository résumé is available at `/Anurag_Patial_Resume.pdf`. Project links come from the existing portfolio and supplied context. Project visual studies are explicitly labeled and are not screenshots of the current products. Connected Operations is an illustrative local workflow demo with no customer data or business outcome claims. Update project data in `App.tsx` and styling in `index.css`.
 
 The previous unused résumé chatbot was removed. The build no longer injects Gemini keys into browser JavaScript.
+
+## SEO and deployment
+
+`npm run build` now prerenders the full React page into `dist/index.html`; the browser hydrates it and adds the 3D experience. Services, projects, biography, and contact links remain readable without JavaScript. Motion reveals keep text visible in the initial HTML.
+
+The build adds a search-focused title/description, Person + ProfilePage + Service JSON-LD, social sharing metadata, and a 1200×630 social card. `robots.txt` is generated on every build.
+
+Canonical URL selection, in order:
+
+1. `SITE_URL` — your public HTTPS origin, optionally in `.env.production.local` locally or your hosting build environment.
+2. Vercel's `VERCEL_PROJECT_PRODUCTION_URL` (or `VITE_VERCEL_PROJECT_PRODUCTION_URL`), when system environment variables are exposed.
+
+The selected URL is used consistently for the canonical link, Open Graph URL, social image URLs, and `sitemap.xml`. A local build without a URL omits canonical/sitemap instead of guessing a domain; a Vercel build without a production origin fails with setup instructions. `VERCEL_ENV=preview` adds `noindex,follow` to avoid indexing preview deployments. The production sitemap lists the one real page, not fragment-only sections. Override `SITE_URL` when you move to a custom domain.
+
+Validate output with `npm run check:seo` after building. This verifies raw HTML content, metadata, structured-data JSON, indexing policy, URL configuration, robots, sitemap when configured, and social-card dimensions. To validate a local production-domain build, set `SITE_URL` to your actual domain for both build and check commands.
+
+After production deployment, verify your domain in Google Search Console, submit `/sitemap.xml`, and request indexing using URL Inspection. These account actions and live performance/ranking measurements are not performed by the build. Test the deployed URL with Google's Rich Results Test and PageSpeed Insights; schema does not guarantee rich results or rankings.
