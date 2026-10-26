@@ -1,3 +1,4 @@
+import { servicePages } from "./service-content.mjs";
 export const title = "Anurag Patial | Business Websites, Commerce & Automation";
 export const description =
   "Anurag Patial helps businesses improve customer journeys, e-commerce experiences, and daily operations through websites, commerce solutions, and automation.";
@@ -79,10 +80,35 @@ export function buildStructuredData(siteUrl) {
     name,
     description,
     provider: { "@id": person["@id"] },
-    ...(siteUrl ? { url: `${siteUrl}#services` } : {}),
+    ...(siteUrl ? { url: `${siteUrl}services/${servicePages[index].slug}/` } : {}),
   }));
   return {
     "@context": "https://schema.org",
     "@graph": [person, page, ...services],
+  };
+}
+
+export function buildServiceStructuredData(page, siteUrl) {
+  const path = `services/${page.slug}/`;
+  const url = siteUrl ? new URL(path, siteUrl).href : `/${path}`;
+  const person = buildStructuredData(siteUrl)["@graph"][0];
+  return {
+    "@context": "https://schema.org",
+    "@graph": [person, {
+      "@type": "WebPage", "@id": `${url}#page`, url,
+      name: page.title, description: page.description, inLanguage: "en",
+      mainEntity: { "@id": `${url}#service` },
+      breadcrumb: { "@id": `${url}#breadcrumb` },
+    }, {
+      "@type": "Service", "@id": `${url}#service`, url,
+      name: page.label, description: page.description,
+      provider: { "@id": person["@id"] },
+    }, {
+      "@type": "BreadcrumbList", "@id": `${url}#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: siteUrl || "/" },
+        { "@type": "ListItem", position: 2, name: page.label, item: url },
+      ],
+    }],
   };
 }

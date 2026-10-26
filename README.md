@@ -40,7 +40,7 @@ Canonical URL selection, in order:
 1. `SITE_URL` — your public HTTPS origin, optionally in `.env.production.local` locally or your hosting build environment.
 2. Vercel's `VERCEL_PROJECT_PRODUCTION_URL` (or `VITE_VERCEL_PROJECT_PRODUCTION_URL`), when system environment variables are exposed.
 
-The selected URL is used consistently for the canonical link, Open Graph URL, social image URLs, and `sitemap.xml`. A local build without a URL omits canonical/sitemap instead of guessing a domain; a Vercel build without a production origin fails with setup instructions. `VERCEL_ENV=preview` adds `noindex,follow` to avoid indexing preview deployments. The production sitemap lists the one real page, not fragment-only sections. Override `SITE_URL` when you move to a custom domain.
+The selected URL is used consistently for the canonical link, Open Graph URL, social image URLs, and `sitemap.xml`. A local build without a URL omits canonical/sitemap instead of guessing a domain; a Vercel build without a production origin fails with setup instructions. `VERCEL_ENV=preview` adds `noindex,follow` to avoid indexing preview deployments. The production sitemap lists the homepage and three dedicated service pages, not fragment-only sections. Override `SITE_URL` when you move to a custom domain.
 
 Validate output with `npm run check:seo` after building. This verifies raw HTML content, metadata, structured-data JSON, indexing policy, URL configuration, robots, sitemap when configured, and social-card dimensions. To validate a local production-domain build, set `SITE_URL` to your actual domain for both build and check commands.
 
@@ -53,3 +53,25 @@ The primary message, services, problem selector, contact brief, metadata, and so
 Street Bill and Hike Summit are featured first, as requested by the portfolio owner. Their descriptions cover observable business/site features without inventing contribution scope or performance results. Street Bill uses a local storefront capture; Hike Summit uses a labeled original illustrative overview because the live site challenged the QA browser. Confirm specific contributions before adding detailed case-study claims.
 
 The custom layered project interaction and challenge selector apply GetLayers' public design guidance with the existing Motion library. No paid GetLayers template, prompt, or SDK is included. Attribution and research links are recorded in THIRD_PARTY_NOTICES.md. Hover tilt is disabled for touch pointers and reduced motion; the challenge selector supports tab/arrow-key navigation and prefills the inquiry focus.
+
+
+## Search architecture and launch verification
+
+The homepage links to three distinct, static service documents:
+- `/services/business-websites/`: business website strategy and implementation.
+- `/services/shopify-development/`: Shopify themes, Liquid sections and commerce integrations.
+- `/services/workflow-automation/`: n8n, API and Salesforce workflow work.
+
+Content lives in `scripts/service-content.mjs`; `ServicePage.tsx` renders it at build time. Each page has its own title, description, canonical, social metadata, Service and BreadcrumbList data. The service pages ship no application JavaScript. FAQ disclosures use native HTML. They share the site's CSS and link to the portfolio, contact section and related services. Vercel normalizes trailing slashes and uses a dedicated noindex 404 document; there is intentionally no catch-all homepage rewrite.
+
+Before calling the SEO work complete in production:
+1. Set `SITE_URL` to the final preferred domain when using a custom domain. Verify redirects from alternate domains to it in hosting settings. Avoid changing indexed URLs without permanent redirects.
+2. Verify the domain in Google Search Console and submit `/sitemap.xml`. Inspect the homepage and all three service URLs; confirm HTTP 200, the correct Google-selected canonical and indexability. Check an invented path returns HTTP 404, not a homepage with 200.
+3. Run PageSpeed Insights for mobile and desktop on the live homepage and a service page. Record lab results separately from field data. Assess 75th-percentile field LCP <= 2.5s, INP <= 200ms and CLS <= 0.1 when sufficient data exists. Do not claim a Lighthouse score or Core Web Vitals pass from a successful build.
+4. Validate structured data with Schema.org Validator and Google Rich Results Test. Service markup is descriptive and does not itself promise a Google rich result. No fabricated ratings, reviews, FAQ rich-result promises or client outcomes are included.
+5. Add evidence-rich case studies once project contributions, business constraints, permission to share and measured outcomes are confirmed. The current project cards do not claim ownership of all work or invented improvements.
+6. Review Search Console queries and landing pages after indexing. Improve pages based on relevant impressions, click-through and qualified enquiries; avoid publishing near-duplicate city or keyword pages.
+
+No Search Console property, analytics account, ranking data or field performance measurement was configured or accessed by this change. Technical SEO supports discovery; search rankings also depend on relevance, evidence and reputation.
+
+References: [Google crawlable links](https://developers.google.com/search/docs/crawling-indexing/links-crawlable), [Core Web Vitals](https://developers.google.com/search/docs/appearance/core-web-vitals), [structured data policies](https://developers.google.com/search/docs/appearance/structured-data/sd-policies).
