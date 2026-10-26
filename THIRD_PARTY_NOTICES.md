@@ -17,3 +17,13 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 The 3D workshop, project interface studies, and other design elements are custom implementations. Interface studies are illustrative, not screenshots. Dependencies retain their respective licenses.
+
+## GetLayers design research
+
+The original LayeredProjectVisual and BusinessFit components apply principles from GetLayers' publicly available documentation and its team's public-domain AI Design Vault motion guide: spring responses, transform-based motion, reduced-motion support, and content present independently of animation. This is a custom React/Motion implementation, not a bundled GetLayers template or an installed GetLayers SDK. No premium prompts, downloaded templates, or proprietary assets are included.
+
+- https://www.getlayers.ai/docs
+- https://github.com/textura-agency/ai-design-vault/blob/main/obsidian/frontend/motion-system.md
+- https://github.com/textura-agency/ai-design-vault/blob/main/LICENSE.md
+
+Street Bill's project image is a capture of the public storefront supplied by the portfolio owner. Hike Summit's project visual is an original illustration labeled as an overview, not a capture of its website. Project descriptions describe publicly observable storefront features; they do not assert specific contribution scope, sole authorship, endorsement, or measured results.

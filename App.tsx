@@ -31,6 +31,8 @@ import {
   Minus,
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
+import LayeredProjectVisual from "./components/LayeredProjectVisual";
+import BusinessFit from "./components/BusinessFit";
 import WorkshopFallback from "./components/WorkshopFallback";
 import InteractiveHoverButton from "./components/InteractiveHoverButton";
 import "./index.css";
@@ -39,6 +41,28 @@ const EMAIL = "patyalanurag222@gmail.com";
 const projects = [
   {
     id: "01",
+    name: "Street Bill",
+    category: "SNEAKER & STREETWEAR COMMERCE",
+    type: "Commerce",
+    text: "A Danish sneaker and streetwear storefront with brand-led navigation, collection discovery, and product browsing across an extensive catalog.",
+    stack: "E-commerce / Product discovery",
+    url: "https://street-bill.dk/",
+    github: "",
+    visual: "street",
+  },
+  {
+    id: "02",
+    name: "Hike Summit",
+    category: "OUTDOOR CLOTHING & EQUIPMENT",
+    type: "Commerce",
+    text: "An outdoor commerce experience bringing clothing, footwear, and equipment into one catalog, with category-led browsing for different activities and needs.",
+    stack: "E-commerce / Catalog experience",
+    url: "https://hike-summit.com/",
+    github: "",
+    visual: "hike",
+  },
+  {
+    id: "03",
     name: "Burgertech",
     category: "ORDERING EXPERIENCE",
     type: "Websites",
@@ -49,7 +73,7 @@ const projects = [
     visual: "burger",
   },
   {
-    id: "02",
+    id: "04",
     name: "Cognitive Focus",
     category: "INTERACTIVE WEB APP",
     type: "Websites",
@@ -60,7 +84,7 @@ const projects = [
     visual: "focus",
   },
   {
-    id: "03",
+    id: "05",
     name: "Connected operations",
     category: "ILLUSTRATIVE WORKFLOW",
     type: "Automations",
@@ -71,7 +95,7 @@ const projects = [
     visual: "flow",
   },
   {
-    id: "04",
+    id: "06",
     name: "Restaurant experience",
     category: "RESPONSIVE WEBSITE",
     type: "Websites",
@@ -107,7 +131,7 @@ function Reveal({
       initial={{ y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12 }}
-      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ type: "spring", stiffness: 100, damping: 24 }}
     >
       {children}
     </motion.div>
@@ -166,6 +190,8 @@ function WorkflowDemo() {
   );
 }
 function ProjectVisual({ kind }: { kind: string }) {
+  if (kind === "street" || kind === "hike")
+    return <LayeredProjectVisual kind={kind} />;
   if (kind === "flow") return <WorkflowDemo />;
   if (kind === "burger")
     return (
@@ -237,8 +263,15 @@ function ProjectVisual({ kind }: { kind: string }) {
     </div>
   );
 }
-function Contact() {
-  const [service, setService] = useState("Website");
+function Contact({
+  focus,
+  onFocusChange,
+}: {
+  focus: string;
+  onFocusChange: (value: string) => void;
+}) {
+  const service = focus;
+  const setService = onFocusChange;
   const [status, setStatus] = useState("");
   const [sending, setSending] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -303,15 +336,16 @@ function Contact() {
       <div className="contact-grid">
         <Reveal>
           <h2>
-            Have a good
+            What’s slowing
             <br />
-            problem?
+            your business
             <br />
-            <em>Let’s build.</em>
+            <em>down?</em>
           </h2>
           <p>
-            A new website, a better storefront, or a workflow that gives you
-            your time back. Tell me what you have in mind.
+            Tell me where customers or your team get stuck. We can work out what
+            needs to change, what matters first, and a practical scope for
+            moving forward.
           </p>
           <a className="email-link" href={`mailto:${EMAIL}`}>
             {EMAIL}
@@ -332,7 +366,7 @@ function Contact() {
             <fieldset>
               <legend>What can I help with?</legend>
               <div className="service-options">
-                {["Website", "Shopify", "Automation"].map((x) => (
+                {["Website", "Commerce", "Automation"].map((x) => (
                   <button
                     type="button"
                     aria-pressed={service === x}
@@ -383,7 +417,7 @@ function Contact() {
               <textarea
                 name="message"
                 rows={3}
-                placeholder="What are you building, and what needs to work better?"
+                placeholder="What does your business do, where are you getting stuck, and what would a better outcome look like?"
                 required
                 minLength={15}
                 maxLength={5000}
@@ -414,6 +448,7 @@ export default function App() {
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => setHydrated(true), []);
   const [menu, setMenu] = useState(false);
+  const [inquiryFocus, setInquiryFocus] = useState("Website");
   const [filter, setFilter] = useState("All");
   const reduce = useReducedMotion();
   const [paused, setPaused] = useState(false);
@@ -469,25 +504,21 @@ export default function App() {
         <section className="hero">
           <div className="hero-top">
             <span className="eyebrow">
-              <i /> INDEPENDENT DEVELOPER · MOHALI, INDIA
+              <i /> WEB, COMMERCE & AUTOMATION SPECIALIST
             </span>
             <span className="edition">PORTFOLIO / 2026</span>
           </div>
           <div className="hero-grid">
             <Reveal className="hero-copy">
               <h1>
-                Websites with
+                Your business.
                 <br />
-                <em>personality.</em>
-                <br />
-                Systems with
-                <br />
-                <span className="outline-text">purpose.</span>
+                <em>Working better.</em>
               </h1>
               <p>
-                I’m Anurag Patial, a web developer based in Mohali, India. I
-                build custom React websites, Shopify storefronts, and n8n
-                automations that connect the tools behind your business.
+                I’m Anurag Patial. I help businesses turn an unclear online
+                presence, a frustrating storefront, or repetitive manual work
+                into a practical system that supports the way they operate.
               </p>
               <div className="hero-actions">
                 <InteractiveHoverButton
@@ -497,10 +528,10 @@ export default function App() {
                     })
                   }
                 >
-                  Let’s build something
+                  Discuss your business
                 </InteractiveHoverButton>
                 <a href="#work" className="text-link">
-                  Explore my work <ArrowDown size={16} />
+                  See selected projects <ArrowDown size={16} />
                 </a>
               </div>
             </Reveal>
@@ -539,34 +570,35 @@ export default function App() {
             </div>
           </div>
           <div className="hero-bottom">
-            <span>REACT & NODE.JS</span>
-            <span>SHOPIFY & E-COMMERCE</span>
-            <span>n8n & API INTEGRATIONS</span>
+            <span>CLEARER CUSTOMER JOURNEYS</span>
+            <span>BETTER COMMERCE EXPERIENCES</span>
+            <span>CONNECTED BUSINESS OPERATIONS</span>
             <a href="#work">
               SCROLL TO EXPLORE <ArrowDown size={13} />
             </a>
           </div>
         </section>
+        <BusinessFit onSelect={setInquiryFocus} />
         <section id="work" className="work-section">
           <div className="section-marker">
             <span>01 / SELECTED WORK</span>
-            <span>IDEAS, MADE REAL</span>
+            <span>COMMERCE, EXPERIENCES & CONNECTED SYSTEMS</span>
           </div>
           <div className="section-heading">
             <Reveal>
               <h2>
-                Less talk.
+                The work,
                 <br />
-                <em>More making.</em>
+                <em>in context.</em>
               </h2>
             </Reveal>
             <div className="work-intro">
               <p>
-                A selection of web experiences, applications, and the systems
-                that connect them.
+                Commerce projects, web experiences, and automation examples.
+                Explore the businesses and the experiences behind them.
               </p>
               <div className="filters" aria-label="Filter projects">
-                {["All", "Websites", "Automations"].map((x) => (
+                {["All", "Commerce", "Websites", "Automations"].map((x) => (
                   <button
                     aria-pressed={filter === x}
                     className={filter === x ? "active" : ""}
@@ -622,7 +654,7 @@ export default function App() {
                       </a>
                     )}
                   </div>
-                  {p.visual !== "flow" && (
+                  {!["flow", "street", "hike"].includes(p.visual) && (
                     <span className="preview-note">
                       CUSTOM INTERFACE STUDY · OPEN LIVE SITE FOR CURRENT
                       PRODUCT
@@ -639,12 +671,13 @@ export default function App() {
           </div>
           <Reveal className="services-heading">
             <h2>
-              Make it look right.
+              Solve the bottleneck.
               <br />
-              <em>Make it work harder.</em>
+              <em>Build what matters.</em>
             </h2>
             <p>
-              From the first impression to the work happening behind the scenes.
+              The right work starts with your customers, your team, and the
+              problem in their way.
             </p>
           </Reveal>
           <div className="service-list">
@@ -652,30 +685,34 @@ export default function App() {
               {
                 icon: Globe,
                 no: "01",
-                name: "Websites that feel like you.",
-                body: "Custom React websites, landing pages, and interactive experiences. Designed around your business, built for mobile, and ready to grow.",
-                tags: "UI DEVELOPMENT / RESPONSIVE DESIGN / PERFORMANCE",
+                name: "Turn interest into a clear next step.",
+                body: "Make your offer easier to understand and your business easier to contact. Strategy, page structure, and a responsive website built around your customer’s next decision.",
+                tags: "WEBSITE STRATEGY / CUSTOMER JOURNEY / IMPLEMENTATION",
                 service: "Website",
               },
               {
                 icon: ShoppingBag,
                 no: "02",
-                name: "Storefronts built to sell.",
-                body: "Shopify theme development, custom sections, storefront improvements, and integrations that make buying and managing your store simpler.",
-                tags: "SHOPIFY / CUSTOM LIQUID / E-COMMERCE",
-                service: "Shopify",
+                name: "Make your store easier to buy from.",
+                body: "Bring clarity to product discovery, strengthen the shopping experience, and adapt your storefront to how your business works. From custom Shopify sections to commerce integrations.",
+                tags: "COMMERCE / PRODUCT DISCOVERY / STOREFRONT SYSTEMS",
+                service: "Commerce",
               },
               {
                 icon: Workflow,
                 no: "03",
-                name: "Less busywork. More business.",
-                body: "n8n workflows, API integrations, and Salesforce solutions that connect your tools and reduce repetitive steps in your operations.",
-                tags: "n8n / API INTEGRATIONS / SALESFORCE",
+                name: "Give your team fewer manual handoffs.",
+                body: "Connect the tools your team already uses. Map the process, automate repeated steps, and make exceptions visible so important work does not disappear between systems.",
+                tags: "WORKFLOW DESIGN / AUTOMATION / SYSTEM INTEGRATION",
                 service: "Automation",
               },
             ].map((s) => (
               <Reveal key={s.no}>
-                <a className="service-item" href="#contact">
+                <a
+                  className="service-item"
+                  href="#contact"
+                  onClick={() => setInquiryFocus(s.service)}
+                >
                   <span className="service-number">{s.no}</span>
                   <s.icon size={27} strokeWidth={1.3} />
                   <div>
@@ -734,7 +771,7 @@ export default function App() {
         </section>
         <section id="about" className="about-section">
           <div className="section-marker">
-            <span>04 / THE PERSON BEHIND THE PIXELS</span>
+            <span>04 / YOUR PARTNER FROM PROBLEM TO DELIVERY</span>
             <span>ANURAG PATIAL</span>
           </div>
           <div className="about-grid">
@@ -744,29 +781,31 @@ export default function App() {
                 <small>
                   CURIOUS BY DEFAULT.
                   <br />
-                  DEVELOPER BY CRAFT.
+                  BUSINESS FIRST.
                 </small>
                 <i>↗</i>
               </div>
             </Reveal>
             <Reveal>
               <span className="eyebrow">
-                DEVELOPER. PROBLEM SOLVER. BUILDER.
+                ANURAG PATIAL / WEB, COMMERCE & AUTOMATION
               </span>
               <h2>
-                I like the part
-                <br />
-                where it <em>clicks.</em>
+                A technical partner.
+                <br />A <em>business mindset.</em>
               </h2>
               <p>
-                When an interface feels natural. When two tools finally talk to
-                each other. When a repetitive task becomes a workflow that just
-                runs.
+                A business rarely needs technology for its own sake. It needs
+                customers to understand the offer, a store that is easier to
+                navigate, and a team that can spend less time on repetitive
+                work.
               </p>
               <p>
-                I’m a software developer based in Mohali, working across React,
-                Node.js, Shopify, Salesforce, and n8n. My experience spans web
-                applications, merchant tools, and API integrations.
+                Based in Mohali, India, I combine hands-on experience in web
+                applications, e-commerce, Salesforce, and automation to connect
+                the customer experience with the work happening behind it. I
+                help define the problem, recommend a practical scope, and take
+                responsibility for implementation and handover.
               </p>
               <div className="experience-lines">
                 <div>
@@ -840,7 +879,7 @@ export default function App() {
             ))}
           </div>
         </section>
-        <Contact />
+        <Contact focus={inquiryFocus} onFocusChange={setInquiryFocus} />
       </main>
       <footer>
         <a href="#" className="wordmark">

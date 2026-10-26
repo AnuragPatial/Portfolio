@@ -16,10 +16,12 @@ assert.equal(
   "Exactly one primary heading",
 );
 assert(
-  html.includes("I’m Anurag Patial, a web developer based in Mohali, India."),
+  html.includes("I’m Anurag Patial. I help businesses"),
   "Visible, prerendered service introduction",
 );
 for (const text of [
+  "Street Bill",
+  "Hike Summit",
   "Burgertech",
   "Cognitive Focus",
   "Shopify",
@@ -112,6 +114,10 @@ for (const bad of [
   "https://example.org/#x",
 ])
   assert.throws(() => resolveSiteUrl({ SITE_URL: bad }));
+for (const url of ["https://street-bill.dk/", "https://hike-summit.com/"])
+  assert(html.includes(`href="${url}"`), "Featured commerce project link");
+assert(!html.includes("INDEPENDENT DEVELOPER"), "Business-first positioning");
+assert(html.includes("Your business."), "Business-focused primary heading");
 const card = await readFile("dist/social-card.png");
 assert.equal(card.readUInt32BE(16), 1200);
 assert.equal(card.readUInt32BE(20), 630);
