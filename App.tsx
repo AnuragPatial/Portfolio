@@ -689,6 +689,7 @@ export default function App() {
                 body: "Make your offer easier to understand and your business easier to contact. Strategy, page structure, and a responsive website built around your customer’s next decision.",
                 tags: "WEBSITE STRATEGY / CUSTOMER JOURNEY / IMPLEMENTATION",
                 service: "Website",
+                path: "/services/business-websites/",
               },
               {
                 icon: ShoppingBag,
@@ -697,6 +698,7 @@ export default function App() {
                 body: "Bring clarity to product discovery, strengthen the shopping experience, and adapt your storefront to how your business works. From custom Shopify sections to commerce integrations.",
                 tags: "COMMERCE / PRODUCT DISCOVERY / STOREFRONT SYSTEMS",
                 service: "Commerce",
+                path: "/services/shopify-development/",
               },
               {
                 icon: Workflow,
@@ -705,13 +707,13 @@ export default function App() {
                 body: "Connect the tools your team already uses. Map the process, automate repeated steps, and make exceptions visible so important work does not disappear between systems.",
                 tags: "WORKFLOW DESIGN / AUTOMATION / SYSTEM INTEGRATION",
                 service: "Automation",
+                path: "/services/workflow-automation/",
               },
             ].map((s) => (
               <Reveal key={s.no}>
                 <a
                   className="service-item"
-                  href="#contact"
-                  onClick={() => setInquiryFocus(s.service)}
+                  href={s.path}
                 >
                   <span className="service-number">{s.no}</span>
                   <s.icon size={27} strokeWidth={1.3} />

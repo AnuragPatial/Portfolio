@@ -1,3 +1,4 @@
+import { servicePages } from "./service-content.mjs";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { loadEnv } from "vite";
@@ -83,8 +84,8 @@ if (siteUrl) {
   assert(!sitemap.includes("#"), "No fragment-only sections in sitemap");
   assert.equal(
     (sitemap.match(/<url>/g) || []).length,
-    1,
-    "Only the one real page is listed",
+    4,
+    "Homepage and three service pages are listed",
   );
 } else
   assert(!html.includes('rel="canonical"'), "Never invent a production URL");
@@ -124,3 +125,30 @@ assert.equal(card.readUInt32BE(20), 630);
 console.log(
   "SEO checks passed: prerendered content, metadata, schema, indexing, URL validation, sitemap, robots, social image.",
 );
+
+const pageTitles = new Set();
+for (const page of servicePages) {
+  const path = `/services/${page.slug}/`;
+  const doc = await readFile(`dist${path}index.html`, 'utf8');
+  assert(html.includes(`href="${path}"`), 'Homepage links to each service');
+  assert.equal((doc.match(/<h1[ >]/g) || []).length, 1);
+  assert(doc.includes(page.heading), 'Visible primary service heading');
+  assert(!doc.includes('type="module"'), 'Service content needs no JavaScript');
+  assert(!doc.includes('modulepreload'), 'No unused application downloads');
+  const pageTitle = doc.match(/<title>(.*?)<\/title>/)[1];
+  assert(!pageTitles.has(pageTitle), 'Unique service title'); pageTitles.add(pageTitle);
+  assert(doc.includes(page.description.replaceAll('&', '&amp;')), 'Unique service description');
+  assert(doc.includes(preview ? 'noindex,follow' : 'index,follow,max-image-preview:large'));
+  for (const other of servicePages.filter(item => item !== page)) assert(doc.includes(`href="/services/${other.slug}/"`));
+  const data = JSON.parse(doc.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  assert(data['@graph'].some(node => node['@type'] === 'BreadcrumbList'));
+  assert(data['@graph'].some(node => node['@type'] === 'Service'));
+  if (siteUrl) {
+    const expected = new URL(path, siteUrl).href;
+    assert.equal((doc.match(/rel="canonical"/g) || []).length, 1);
+    assert(doc.includes(`rel="canonical" href="${expected}"`));
+    assert((await readFile('dist/sitemap.xml', 'utf8')).includes(`<loc>${expected}</loc>`));
+  }
+}
+assert((await readFile('dist/404.html', 'utf8')).includes('noindex,follow'));
+console.log('Service SEO checks passed: unique pages, internal links, static HTML, breadcrumbs, canonicals and 404.');
