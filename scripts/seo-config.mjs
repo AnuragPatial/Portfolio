@@ -1,6 +1,6 @@
-export const title = "Anurag Patial | Web Developer & Automation Specialist";
+export const title = "Anurag Patial | Business Websites, Commerce & Automation";
 export const description =
-  "Hire Anurag Patial for custom React websites, Shopify development, and n8n automations. Based in Mohali, India. Explore projects and discuss your requirements.";
+  "Anurag Patial helps businesses improve customer journeys, e-commerce experiences, and daily operations through websites, commerce solutions, and automation.";
 
 export function resolveSiteUrl(env) {
   const raw =
@@ -32,7 +32,7 @@ export function buildStructuredData(siteUrl) {
     "@type": "Person",
     "@id": siteUrl ? `${siteUrl}#anurag` : "#anurag",
     name: "Anurag Patial",
-    jobTitle: "Web Developer and Automation Specialist",
+    jobTitle: "Web, Commerce and Automation Specialist",
     description,
     ...(siteUrl ? { url: siteUrl } : {}),
     homeLocation: { "@type": "Place", name: "Mohali, Punjab, India" },

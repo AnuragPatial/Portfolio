@@ -45,3 +45,11 @@ The selected URL is used consistently for the canonical link, Open Graph URL, so
 Validate output with `npm run check:seo` after building. This verifies raw HTML content, metadata, structured-data JSON, indexing policy, URL configuration, robots, sitemap when configured, and social-card dimensions. To validate a local production-domain build, set `SITE_URL` to your actual domain for both build and check commands.
 
 After production deployment, verify your domain in Google Search Console, submit `/sitemap.xml`, and request indexing using URL Inspection. These account actions and live performance/ranking measurements are not performed by the build. Test the deployed URL with Google's Rich Results Test and PageSpeed Insights; schema does not guarantee rich results or rankings.
+
+## Business positioning and featured commerce projects
+
+The primary message, services, problem selector, contact brief, metadata, and social card emphasize business needs across customer journeys, commerce, and operational automation. Technical employment titles remain factual background.
+
+Street Bill and Hike Summit are featured first, as requested by the portfolio owner. Their descriptions cover observable business/site features without inventing contribution scope or performance results. Street Bill uses a local storefront capture; Hike Summit uses a labeled original illustrative overview because the live site challenged the QA browser. Confirm specific contributions before adding detailed case-study claims.
+
+The custom layered project interaction and challenge selector apply GetLayers' public design guidance with the existing Motion library. No paid GetLayers template, prompt, or SDK is included. Attribution and research links are recorded in THIRD_PARTY_NOTICES.md. Hover tilt is disabled for touch pointers and reduced motion; the challenge selector supports tab/arrow-key navigation and prefills the inquiry focus.
