@@ -104,7 +104,7 @@ function Reveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12 }}
       transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
@@ -323,7 +323,12 @@ function Contact() {
           </button>
         </Reveal>
         <Reveal>
-          <form onSubmit={submit}>
+          <form
+            onSubmit={submit}
+            action={`mailto:${EMAIL}`}
+            method="post"
+            encType="text/plain"
+          >
             <fieldset>
               <legend>What can I help with?</legend>
               <div className="service-options">
@@ -406,6 +411,8 @@ function Contact() {
   );
 }
 export default function App() {
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
   const [menu, setMenu] = useState(false);
   const [filter, setFilter] = useState("All");
   const reduce = useReducedMotion();
@@ -478,18 +485,16 @@ export default function App() {
                 <span className="outline-text">purpose.</span>
               </h1>
               <p>
-                I’m Anurag. I build distinctive websites and connect the tools
-                behind your business—so your online presence works as hard as
-                you do.
+                I’m Anurag Patial, a web developer based in Mohali, India. I
+                build custom React websites, Shopify storefronts, and n8n
+                automations that connect the tools behind your business.
               </p>
               <div className="hero-actions">
                 <InteractiveHoverButton
                   onClick={() =>
-                    document
-                      .getElementById("contact")
-                      ?.scrollIntoView({
-                        behavior: reduce ? "instant" : "smooth",
-                      })
+                    document.getElementById("contact")?.scrollIntoView({
+                      behavior: reduce ? "instant" : "smooth",
+                    })
                   }
                 >
                   Let’s build something
@@ -512,7 +517,11 @@ export default function App() {
                     </div>
                   }
                 >
-                  <StudioScene active={!paused && !reduce && visible} />
+                  {hydrated ? (
+                    <StudioScene active={!paused && !reduce && visible} />
+                  ) : (
+                    <WorkshopFallback />
+                  )}
                 </Suspense>
               </SceneBoundary>
               <div className="object-caption">

@@ -8,9 +8,13 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          "three-core": ["three"],
-          "three-react": ["@react-three/fiber", "@react-three/drei"],
+        onlyExplicitManualChunks: true,
+        manualChunks(id) {
+          if (/node_modules\/(react|react-dom|scheduler)\//.test(id))
+            return "react-vendor";
+          if (id.includes("/node_modules/three/")) return "three-core";
+          if (/node_modules\/@react-three\/(fiber|drei)\//.test(id))
+            return "three-react";
         },
       },
     },
